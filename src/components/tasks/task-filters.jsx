@@ -142,7 +142,6 @@ export function TaskFilters() {
             </div>
           )}
 
-          {/* Sort */}
           <div className="space-y-2">
             <Label>Sort by</Label>
             <div className="flex gap-2">
@@ -168,8 +167,6 @@ export function TaskFilters() {
             </div>
           </div>
         </div>
-
-        {/* Clear Filters */}
         <div className="flex justify-end mt-4">
           <Button variant="outline" onClick={clearFilters} size="sm">
             <X className="h-4 w-4 mr-2" />

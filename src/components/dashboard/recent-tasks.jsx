@@ -14,7 +14,7 @@ export function RecentTasks() {
   const { getFilteredTasks } = useTaskStore()
   
   const tasks = getFilteredTasks(user?.role, user?.id)
-    .slice(0, 5) // Show only recent 5 tasks
+    .slice(0, 6) 
 
   return (
     <Card>

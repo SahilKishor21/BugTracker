@@ -54,7 +54,7 @@ export function TaskForm({ taskId = null }) {
       
       console.log('Setting form data from existing task:', taskFormData)
       setFormData(taskFormData)
-      setOriginalFormData(taskFormData) // Store original for comparison
+      setOriginalFormData(taskFormData) 
     }
   }, [existingTask])
 
@@ -64,7 +64,6 @@ export function TaskForm({ taskId = null }) {
 
     try {
       if (isEditing && originalFormData) {
-        // Find only the fields that actually changed
         const changedFields = {}
         
         Object.keys(formData).forEach(key => {
@@ -74,7 +73,6 @@ export function TaskForm({ taskId = null }) {
             if (key === 'dueDate') {
               changedFields[key] = new Date(formData[key])
             } else if (key === 'assigneeId') {
-              // If assignee changed, also update assignee name
               changedFields[key] = formData[key]
               const assignee = MOCK_USERS.find(u => u.id === formData[key])
               changedFields.assignee = assignee?.name || ''
@@ -86,14 +84,12 @@ export function TaskForm({ taskId = null }) {
 
         console.log('Changed fields to update:', changedFields)
 
-        // Only call updateTask if there are actual changes
         if (Object.keys(changedFields).length > 0) {
           updateTask(taskId, changedFields)
         } else {
           console.log('No changes detected, skipping update')
         }
       } else {
-        // For new tasks, create with all fields
         const assignee = MOCK_USERS.find(u => u.id === formData.assigneeId)
         
         const taskData = {
@@ -124,7 +120,6 @@ export function TaskForm({ taskId = null }) {
 
   const developers = MOCK_USERS.filter(u => u.role === 'developer')
 
-  // Don't render form until we have original data for editing
   if (isEditing && !originalFormData) {
     return <div>Loading...</div>
   }

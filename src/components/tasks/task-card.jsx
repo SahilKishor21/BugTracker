@@ -67,97 +67,116 @@ export function TaskCard({ task }) {
     setIsLoading(false)
   }
 
+  const getStatusDisplay = (status) => {
+    switch (status) {
+      case 'in-progress':
+        return 'In Progress'
+      case 'pending-approval':
+        return 'Pending-approval'
+      default:
+        return status.charAt(0).toUpperCase() + status.slice(1)
+    }
+  }
+
   return (
-    <Card className="hover:shadow-md transition-shadow">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex-1 min-w-0">
-            <CardTitle className="text-lg truncate mb-2">
+    <Card className="hover:shadow-md transition-shadow h-full flex flex-col">
+      <CardHeader className="pb-3 flex-shrink-0">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1">
+            <CardTitle className="text-lg leading-tight mb-3 ">
               {task.title}
             </CardTitle>
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2">
               <Badge
                 variant="secondary"
-                className={`${getPriorityColor(task.priority)} text-white text-xs`}
+                className={`${getPriorityColor(task.priority)} text-white text-xs font-medium px-2 py-1 whitespace-nowrap`}
               >
-                {task.priority}
+                {task.priority.charAt(0).toUpperCase() + task.priority.slice(1)}
               </Badge>
+              
               <Badge
                 variant="outline"
-                className={`${getStatusColor(task.status)} text-white border-none text-xs`}
+                className={`${getStatusColor(task.status)} text-white border-none text-xs font-medium px-2 py-1 whitespace-nowrap`}
               >
-                {task.status.replace('-', ' ')}
+                {getStatusDisplay(task.status)}
               </Badge>
-              <Badge variant="outline" className="text-xs">
-                {task.type}
+              
+              <Badge 
+                variant="outline" 
+                className="text-xs font-medium px-2 py-1 whitespace-nowrap"
+              >
+                {task.type.charAt(0).toUpperCase() + task.type.slice(1)}
               </Badge>
             </div>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => router.push(`/tasks/${task.id}`)}>
-                <Eye className="mr-2 h-4 w-4" />
-                View Details
-              </DropdownMenuItem>
-              {canEdit && (
-                <>
-                  <DropdownMenuItem onClick={handleEdit}>
-                    <Edit className="mr-2 h-4 w-4" />
-                    Edit
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleDelete} className="text-destructive">
-                    <Trash2 className="mr-2 h-4 w-4" />
-                    Delete
-                  </DropdownMenuItem>
-                </>
-              )}
-              {canRequestApproval && (
-                <DropdownMenuItem onClick={handleRequestApproval}>
-                  <CheckCircle className="mr-2 h-4 w-4" />
-                  Request Approval
+          
+          <div className="flex-shrink-0">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => router.push(`/tasks/${task.id}`)}>
+                  <Eye className="mr-2 h-4 w-4" />
+                  View Details
                 </DropdownMenuItem>
-              )}
-              {canApprove && (
-                <>
-                  <DropdownMenuItem onClick={handleApprove}>
+                {canEdit && (
+                  <>
+                    <DropdownMenuItem onClick={handleEdit}>
+                      <Edit className="mr-2 h-4 w-4" />
+                      Edit
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleDelete} className="text-destructive">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </DropdownMenuItem>
+                  </>
+                )}
+                {canRequestApproval && (
+                  <DropdownMenuItem onClick={handleRequestApproval}>
                     <CheckCircle className="mr-2 h-4 w-4" />
-                    Approve
+                    Request Approval
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={handleReopen}>
-                    <XCircle className="mr-2 h-4 w-4" />
-                    Reopen
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                )}
+                {canApprove && (
+                  <>
+                    <DropdownMenuItem onClick={handleApprove}>
+                      <CheckCircle className="mr-2 h-4 w-4" />
+                      Approve
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleReopen}>
+                      <XCircle className="mr-2 h-4 w-4" />
+                      Reopen
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </CardHeader>
       
-      <CardContent className="pt-0">
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+      <CardContent className="pt-0 flex-1 flex flex-col">
+        <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
           {task.description}
         </p>
         
-        <div className="space-y-2 text-sm">
+        <div className="space-y-3 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Calendar className="h-4 w-4" />
-            <span>Due: {formatDate(task.dueDate)}</span>
+            <Calendar className="h-4 w-4 flex-shrink-0" />
+            <span className="truncate">Due: {formatDate(task.dueDate)}</span>
           </div>
           
           <div className="flex items-center gap-2 text-muted-foreground">
-            <Clock className="h-4 w-4" />
-            <span>Time: {formatTime(task.timeSpent)}</span>
+            <Clock className="h-4 w-4 flex-shrink-0" />
+            <span className="truncate">Time: {formatTime(task.timeSpent || 0)}</span>
           </div>
           
           {user?.role === 'manager' && (
             <div className="text-muted-foreground">
-              <span>Assignee: {task.assignee}</span>
+              <span className="truncate block">Assignee: {task.assignee}</span>
             </div>
           )}
         </div>
