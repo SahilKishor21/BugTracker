@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
-import { useParams } from 'next/navigation'
-import { AuthGuard } from '@/components/auth/auth-guard'
-import { TaskForm } from '@/components/tasks/task-form'
+import { useParams } from "next/navigation";
+import { AuthGuard } from "@/components/auth/auth-guard";
+import { TaskForm } from "@/components/tasks/task-form";
 
 export default function EditTaskPage() {
-  const params = useParams()
+  const params = useParams();
 
   return (
     <AuthGuard>
-      <div className=' bg-muted/50'>
+      <div className="bg-muted/50">
         <div className="main-container py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold">Edit Task</h1>
@@ -22,5 +22,5 @@ export default function EditTaskPage() {
         </div>
       </div>
     </AuthGuard>
-  )
+  );
 }
