@@ -10,7 +10,7 @@
 
 **A comprehensive, modern bug and task tracking application built with Next.js 14, featuring role-based authentication, time tracking, and a beautiful responsive UI.**
 
-[🚀 Live Demo](#) • [📖 Documentation](#) • [🐛 Report Bug](#) • [💡 Request Feature](#)
+[🚀 Live Demo](https://bug-tracker-orcin.vercel.app/dashboard) • [📖 Documentation](#) • [🐛 Report Bug](#) • [💡 Request Feature](#)
 
 </div>
 
